@@ -1,0 +1,20 @@
+[project]
+name = "ls-safari"
+version = "0.1.0"
+description = "Python testing workshop: FastAPI, Pydantic, UV, pytest"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "pydantic>=2.9",
+    "uvicorn[standard]>=0.30",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "httpx>=0.27",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["levels"]

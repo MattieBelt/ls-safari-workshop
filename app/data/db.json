@@ -1,0 +1,11 @@
+{
+  "items": [
+    {"id": 1, "name": "Widget", "price": 9.99},
+    {"id": 2, "name": "Gadget", "price": 19.99},
+    {"id": 3, "name": "Gizmo", "price": 4.5}
+  ],
+  "users": [
+    {"id": 1, "name": "Ada Lovelace"},
+    {"id": 2, "name": "Grace Hopper"}
+  ]
+}
