@@ -1,4 +1,4 @@
-# Level 1 — Unit test
+# Level 1: Unit test
 
 **Goal:** write your first pytest unit tests, against a small pure function.
 
@@ -13,7 +13,7 @@ def apply_discount(total: float, percent: float) -> float:
     return total - (total * percent / 100)
 ```
 
-Pure function, no I/O — the simplest thing to unit test. Same function as the level 0 demo,
+Pure function, no I/O: the simplest thing to unit test. Same function as the level 0 demo,
 now with the guard clause that would've caught that bug.
 
 ## Lesson
@@ -35,6 +35,9 @@ def test_divide_by_zero_raises():
         1 / 0
 ```
 
+pytest also captures `print()` output, but you only see it for tests that fail, not ones that
+pass. Handy to know once you start debugging a test that isn't doing what you expect.
+
 Run: `uv run pytest levels/level_01_unit_testing`
 
 ## Assignment
@@ -47,4 +50,4 @@ Complete the TODOs in `test_apply_discount.py`:
 - [ ] Invalid: negative percent raises `ValueError`
 - [ ] Invalid: percent over 100 raises `ValueError`
 
-Next: [Level 2 — Run multiple tests](../level_02_multiple_tests/README.md)
+Next: [Level 2: Run multiple tests](../level_02_multiple_tests/README.md)

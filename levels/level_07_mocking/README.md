@@ -1,4 +1,4 @@
-# Level 7 — Mock a sub dependency
+# Level 7: Mock a sub dependency
 
 **Goal:** test code that depends on disk I/O without touching the real file.
 
@@ -13,7 +13,7 @@ def get_db() -> dict:
 ```
 
 `app/store.py` writes back to that file after every create/update/delete. Calling these
-directly in a test means reading/writing a real file every run — slow, and one crashed write
+directly in a test means reading/writing a real file every run: slow, and one crashed write
 corrupts data for every test after it.
 
 Fix: replace (mock) `read_db`/`write_db` with a stand-in that doesn't touch disk. The same
@@ -22,8 +22,8 @@ an email, or depending on something non-deterministic like `datetime.now()`.
 
 ## Lesson
 
-`monkeypatch` — the fixture level 4 promised you'd meet again — swaps an attribute for the
-test, restores it after:
+`monkeypatch`, the fixture level 4 promised you'd meet again, swaps an attribute for the
+test and restores it after:
 
 ```python
 def test_example(monkeypatch):
@@ -45,6 +45,9 @@ def test_write_is_called(monkeypatch):
     fake_write.assert_called_once_with({"items": [{"id": 1, "name": "Widget", "price": 1.0}], "users": []})
 ```
 
+Reaching for `monkeypatch` a lot is worth noticing too: it's often a sign of tightly coupled
+code. With clean dependency injection, like `get_db` here, you shouldn't need it often.
+
 ## Assignment
 
 Complete the TODOs in `test_mocked_db.py`:
@@ -57,4 +60,4 @@ Complete the TODOs in `test_mocked_db.py`:
 
 Check `app/data/db.json` is unchanged after running.
 
-Next: [Level 8 — Test routes with the test client](../level_08_test_client/README.md)
+Next: [Level 8: Test routes with the test client](../level_08_test_client/README.md)

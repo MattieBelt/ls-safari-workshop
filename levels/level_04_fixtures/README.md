@@ -1,6 +1,6 @@
-# Level 4 — Fixtures
+# Level 4: Fixtures
 
-**Goal:** stop repeating setup code in every test — extract it into a fixture.
+**Goal:** stop repeating setup code in every test by extracting it into a fixture.
 
 ## Context
 
@@ -18,13 +18,13 @@ class Cart:
         return sum(self.items)
 ```
 
-First stateful example so far — every test needs its own fresh `Cart()`. Without a fixture
+First stateful example so far: every test needs its own fresh `Cart()`. Without a fixture
 that's `cart = Cart()` copy-pasted at the top of each test.
 
 ## Lesson
 
 A fixture is a function decorated with `@pytest.fixture`. A test asks for it by naming it as a
-parameter — pytest calls the fixture and hands over the result:
+parameter, and pytest calls the fixture and hands over the result:
 
 ```python
 @pytest.fixture
@@ -36,9 +36,11 @@ def test_add_increases_total(cart):
     assert cart.total() == 10
 ```
 
-Fresh `Cart()` per test by default — no state leaks between tests.
+Fresh `Cart()` per test by default. No state leaks between tests.
 
-Fixtures can set up *and* tear down, using `yield` instead of `return`:
+Fixtures can set up *and* tear down, using `yield` instead of `return`.
+Quick reminder if it's been a while: `return` hands back a value and the function is done; `yield` hands back a value
+but pauses the function right there; it picks back up after the test finishes, which is where the cleanup code runs.
 
 ```python
 @pytest.fixture
@@ -48,10 +50,10 @@ def cart():
     cart.items.clear()  # runs after the test, even if it failed
 ```
 
-`Cart` doesn't need this — nothing to clean up. `get_db` (level 7) does: teardown is how you'd
+`Cart` doesn't need this. Nothing to clean up. `get_db` (level 7) does: teardown is how you'd
 reset it after a test writes to it.
 
-Fixtures can depend on other fixtures too — request one as a parameter of another:
+Fixtures can depend on other fixtures too, by requesting one as a parameter of another:
 
 ```python
 @pytest.fixture
@@ -65,18 +67,18 @@ def full_cart(cart):
 
 Complete the TODOs in `test_cart.py`:
 
-- [ ] `cart` fixture — returns a fresh `Cart()`
+- [ ] `cart` fixture: returns a fresh `Cart()`
 - [ ] Test: an empty cart totals 0
 - [ ] Test: adding items increases the total
-- [ ] `full_cart` fixture — depends on `cart`, pre-adds a couple of items
+- [ ] `full_cart` fixture: depends on `cart`, pre-adds a couple of items
 - [ ] Test: `full_cart`'s total matches what you added
 
-**Nice to have before moving on** — not required, but worth noticing:
+**Nice to have before moving on.** Not required, but worth noticing:
 
 - `monkeypatch` (level 7) and the `client` fixture (level 8, already in that level's
-  `conftest.py`) are both just fixtures — same mechanism you just used
+  `conftest.py`) are both just fixtures, the same mechanism you just used
 - Fixtures default to function scope (one fresh instance per test); `scope="module"` or
-  `"session"` shares one instance across many tests instead — faster for expensive setup, but
+  `"session"` shares one instance across many tests instead. Faster for expensive setup, but
   tests then aren't isolated from each other
 
-Next: [Level 5 — Pydantic models and strict typing](../level_05_pydantic_models/README.md)
+Next: [Level 5: Pydantic models and strict typing](../level_05_pydantic_models/README.md)
