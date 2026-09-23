@@ -11,7 +11,7 @@ Adding a case currently means copy-pasting a whole test.
 
 ## Lesson
 
-`@pytest.mark.parametrize` runs the same test once per input set, each reported separately:
+In order to run the same test for multiple input sets we can use the `@pytest.mark.parametrize` decorator to set-up the testing data that will be used in the test function:
 
 ```python
 import pytest
