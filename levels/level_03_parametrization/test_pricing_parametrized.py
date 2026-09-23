@@ -12,20 +12,33 @@ import pytest
 from pricing_suite.basket import calculate_total
 from pricing_suite.discounts import apply_discount
 
-# TODO: replace this single case with @pytest.mark.parametrize covering at
-# least: a normal discount, 0%, 100%, and a total of 0.
-def test_apply_discount_cases():
-    assert apply_discount(100, 10) == 90
+
+@pytest.mark.parametrize(
+    "total, percent, expected",
+    [
+        pytest.param(100, 10, 90, id="ten_percent"),
+        pytest.param(100, 0, 100, id="zero_percent"),
+        pytest.param(100, 100, 0, id="hundred_percent"),
+        pytest.param(0, 50, 0, id="zero_total"),
+    ],
+)
+def test_apply_discount_cases(total, percent, expected):
+    assert apply_discount(total=total, percent=percent) == expected
 
 
-# TODO: turn this into a parametrized test with pytest.raises inside the test
-# body, covering both a negative percent and a percent over 100.
-def test_apply_discount_invalid_percent_raises():
+@pytest.mark.parametrize("percent", [-1, 101])
+def test_apply_discount_invalid_percent_raises(percent):
     with pytest.raises(ValueError):
-        apply_discount(100, -1)
+        apply_discount(total=100, percent=percent)
 
 
-# TODO: parametrize calculate_total over a handful of price lists, including
-# an empty list and a list with a single item.
-def test_calculate_total_cases():
-    assert calculate_total([1.0, 2.0, 3.0]) == 6.0
+@pytest.mark.parametrize(
+    "prices, expected",
+    [
+        pytest.param([], 0, id="empty"),
+        pytest.param([5.0], 5.0, id="single_item"),
+        pytest.param([1.0, 2.0, 3.0], 6.0, id="multiple_items"),
+    ],
+)
+def test_calculate_total_cases(prices, expected):
+    assert calculate_total(prices=prices) == expected

@@ -14,26 +14,22 @@ from pricing import apply_discount
 
 
 def test_apply_discount_happy_path():
-    # TODO: assert that apply_discount(100, 10) returns the expected value
-    raise NotImplementedError("TODO: implement this test")
+    assert apply_discount(total=100, percent=10) == 90
 
 
 def test_apply_discount_zero_percent():
-    # TODO: a 0% discount should return the total unchanged
-    raise NotImplementedError("TODO: implement this test")
+    assert apply_discount(total=100, percent=0) == 100
 
 
 def test_apply_discount_hundred_percent():
-    # TODO: a 100% discount should return 0
-    raise NotImplementedError("TODO: implement this test")
+    assert apply_discount(total=100, percent=100) == 0
 
 
 def test_apply_discount_rejects_negative_percent():
-    # TODO: apply_discount(100, -1) should raise ValueError
-    # hint: use `with pytest.raises(ValueError):`
-    raise NotImplementedError("TODO: implement this test")
+    with pytest.raises(ValueError):
+        apply_discount(total=100, percent=-1)
 
 
 def test_apply_discount_rejects_percent_over_100():
-    # TODO: apply_discount(100, 101) should raise ValueError
-    raise NotImplementedError("TODO: implement this test")
+    with pytest.raises(ValueError):
+        apply_discount(total=100, percent=101)

@@ -10,10 +10,9 @@ from pricing_suite.discounts import apply_discount
 
 
 def test_apply_discount_happy_path():
-    # TODO: apply_discount(50, 20) == 40
-    raise NotImplementedError("TODO: implement this test")
+    assert apply_discount(total=50, percent=20) == 40
 
 
 def test_apply_discount_rejects_out_of_range_percent():
-    # TODO: apply_discount(50, 200) raises ValueError
-    raise NotImplementedError("TODO: implement this test")
+    with pytest.raises(ValueError):
+        apply_discount(total=50, percent=200)
